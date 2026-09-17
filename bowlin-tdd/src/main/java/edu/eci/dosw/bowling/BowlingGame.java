@@ -2,6 +2,7 @@ package edu.eci.dosw.bowling;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Motor de un juego de Bowling para un jugador.
@@ -68,11 +69,38 @@ public class BowlingGame {
         }
     }
 
-
-    /** Puntaje total. Lanza IllegalStateException si el juego no esta completo. */
     public int score() {
-        // TODO: implementar con TDD
-        return 0;
+        if (currentFrame < 10) {
+            throw new IllegalStateException("El juego no está completo");
+        }
+
+        return IntStream.range(0, 10)
+                .map(i -> {
+                    Frame frame = frames.get(i);
+
+                    if (frame.getType() == FrameType.STRIKE) {
+                        return 10 + getNextRolls(i, 2);
+                    } else if (frame.getType() == FrameType.SPARE) {
+                        return 10 + getNextRolls(i, 1);
+                    } else {
+                        // NORMAL y TENTH (El frame 10 ya contiene sus bonos sumados)
+                        return frame.getTotalPins();
+                    }
+                })
+                .sum();
+    }
+
+    /**
+     * Función pura que busca los siguientes 'N' tiros
+     * a partir del frame actual usando Streams.
+     */
+    private int getNextRolls(int currentFrameIndex, int limit) {
+        return frames.stream()
+                .skip(currentFrameIndex + 1)
+                .flatMap(f -> f.getRolls().stream())
+                .limit(limit)
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     /** true cuando los 10 frames han sido completados. */
