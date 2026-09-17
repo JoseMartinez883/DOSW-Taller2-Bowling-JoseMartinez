@@ -105,8 +105,7 @@ public class BowlingGame {
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        // TODO: implementar con TDD
-        return false;
+        return currentFrame >= 10;
     }
 
     public List<Frame> getFrames() { return List.copyOf(frames); }
