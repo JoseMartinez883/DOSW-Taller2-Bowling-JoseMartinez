@@ -176,5 +176,63 @@ public class BowlingGameTest {
         assertThrows(IllegalStateException.class, () -> game.score());
     }
 
+    // Test module C
+    @Test
+    @DisplayName("C1: isComplete() al inicio del juego es false")
+    public void shouldReturnFalseAtStartOfGame() {
+        BowlingGame game = new BowlingGame();
+        assertFalse(game.isComplete());
+    }
 
+    @Test
+    @DisplayName("C2: isComplete() después de 9 frames es false")
+    public void shouldReturnFalseAfter9Frames() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 18, 0);
+        assertFalse(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C3: 10 frames normales completos (sin bonos) es true")
+    public void shouldReturnTrueAfter10NormalFrames() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 20, 0);
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C4: Spare en frame 10 + 1 tiro bonus es true")
+    public void shouldReturnTrueAfterSpareAndBonusInTenthFrame() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 18, 0);
+        game.roll(5);
+        game.roll(5);
+        assertFalse(game.isComplete());
+
+        game.roll(5);
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C5: Strike en frame 10 + 2 tiros bonus es true")
+    public void shouldReturnTrueAfterStrikeAndTwoBonusesInTenthFrame() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 18, 0);
+        game.roll(10);
+        assertFalse(game.isComplete());
+
+        game.roll(4);
+        assertFalse(game.isComplete());
+
+        game.roll(3);
+        assertTrue(game.isComplete());
+    }
+
+    @Test
+    @DisplayName("C6: Juego perfecto (12 strikes) es true al final")
+    public void shouldReturnTrueAfterPerfectGame() {
+        BowlingGame game = new BowlingGame();
+        rollPerfectGame(game);
+        assertTrue(game.isComplete());
+    }
 }
