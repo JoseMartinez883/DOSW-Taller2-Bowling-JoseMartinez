@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class BowlingGame {
 
+    private static final int MAX_FRAMES = 10;
+    private static final int MAX_PINS = 10;
     private final List<Frame> frames;
     private int currentFrame;
 
@@ -20,11 +22,11 @@ public class BowlingGame {
     /** Registra pinos derribados. Lanza IllegalArgumentException si pines < 0 o > 10.
      *  Lanza IllegalStateException si el juego ya termino. */
     public void roll(int pins) {
-        if (currentFrame >= 10) {
+        if (currentFrame >= MAX_FRAMES) {
             throw new IllegalStateException("El juego ya termino");
         }
 
-        if (pins < 0 || pins > 10) {
+        if (pins < 0 || pins > MAX_PINS) {
             throw new IllegalArgumentException("Pines inválidos");
         }
 
@@ -32,19 +34,19 @@ public class BowlingGame {
             frames.add(new Frame());
         }
         Frame frame = frames.get(currentFrame);
-        if (currentFrame < 9) {
-            if (frame.getTotalPins() + pins > 10) {
+        if (currentFrame < (MAX_FRAMES - 1)) {
+            if (frame.getTotalPins() + pins > MAX_PINS) {
                 throw new IllegalArgumentException("No puede sumar más de 10 pines");
             }
 
             frame.addRoll(pins);
-            if (frame.getRolls().size() == 1 && pins == 10) {
+            if (frame.getRolls().size() == 1 && pins == MAX_PINS) {
                 frame.setType(FrameType.STRIKE);
                 currentFrame++;
             }
 
             else if (frame.getRolls().size() == 2) {
-                if (frame.getTotalPins() == 10) {
+                if (frame.getTotalPins() == MAX_PINS) {
                     frame.setType(FrameType.SPARE);
                 } else {
                     frame.setType(FrameType.NORMAL);
@@ -58,7 +60,7 @@ public class BowlingGame {
 
             int rollsCount = frame.getRolls().size();
 
-            if (rollsCount == 2 && frame.getRolls().get(0) + frame.getRolls().get(1) < 10) {
+            if (rollsCount == 2 && frame.getRolls().get(0) + frame.getRolls().get(1) < MAX_PINS) {
                 currentFrame++;
             }
 
@@ -79,7 +81,7 @@ public class BowlingGame {
 
     /** true cuando los 10 frames han sido completados. */
     public boolean isComplete() {
-        return currentFrame >= 10;
+        return currentFrame >= MAX_FRAMES;
     }
 
     public List<Frame> getFrames() { return List.copyOf(frames); }
