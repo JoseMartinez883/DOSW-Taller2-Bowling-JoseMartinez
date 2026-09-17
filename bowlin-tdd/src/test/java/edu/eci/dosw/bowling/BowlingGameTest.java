@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BowlingGameTest {
 
+    // helper to module A
     private void rollMany(BowlingGame game, int times, int pins) {
         for (int i = 0; i < times; i++) {
             game.roll(pins);
@@ -89,5 +90,91 @@ public class BowlingGameTest {
             bowlingGame.roll(10);
         });
     }
+
+    // helpers to module B
+    private void rollPerfectGame(BowlingGame game) {
+        for (int i = 0; i < 12; i++) {
+            game.roll(10);
+        }
+    }
+    private void rollAllSpares(BowlingGame game, int lastBonus) {
+        for (int i = 0; i < 10; i++) {
+            game.roll(5);
+            game.roll(5);
+        }
+        game.roll(lastBonus);
+    }
+
+    @Test
+    @DisplayName("B1: Juego con todos los tiros a 0 -> score == 0")
+    public void shouldScoreZeroWhenAllRollsAreZero() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 20, 0);
+        assertEquals(0, game.score());
+    }
+    @Test
+    @DisplayName("B2: Juego sin strikes ni spares -> suma normal")
+    public void shouldCalculateScoreWithoutBonuses() {
+        BowlingGame game = new BowlingGame();
+        rollMany(game, 20, 3);
+        assertEquals(60, game.score());
+    }
+    @Test
+    @DisplayName("B3: Un spare en frame 1 suma el bono del siguiente tiro")
+    public void shouldCalculateScoreWithOneSpare() {
+        BowlingGame game = new BowlingGame();
+        game.roll(5);
+        game.roll(5);
+        game.roll(3);
+        rollMany(game, 17, 0);
+
+        assertEquals(16, game.score());
+    }
+    @Test
+    @DisplayName("B4: Un strike en frame 1 suma el bono de los siguientes dos tiros")
+    public void shouldCalculateScoreWithOneStrike() {
+        BowlingGame game = new BowlingGame();
+        game.roll(10);
+        game.roll(4);
+        game.roll(3);
+        rollMany(game, 16, 0);
+
+        assertEquals(24, game.score());
+    }
+    @Test
+    @DisplayName("B5: Dos strikes consecutivos")
+    public void shouldCalculateScoreWithConsecutiveStrikes() {
+        BowlingGame game = new BowlingGame();
+        game.roll(10);
+        game.roll(10);
+        game.roll(5);
+        game.roll(2);
+        rollMany(game, 14, 0);
+
+        assertEquals(49, game.score());
+    }
+    @Test
+    @DisplayName("B6: Juego de puros spares + ultimo tiro = 5")
+    public void shouldScore150WhenAllSparesAndLastRoll5() {
+        BowlingGame game = new BowlingGame();
+        rollAllSpares(game, 5);
+        assertEquals(150, game.score());
+    }
+    @Test
+    @DisplayName("B7: Juego perfecto - 12 strikes - score debe ser 300")
+    public void shouldScore300OnPerfectGame() {
+        BowlingGame game = new BowlingGame();
+        rollPerfectGame(game);
+        assertEquals(300, game.score());
+    }
+    @Test
+    @DisplayName("B8: Llamar score() antes de terminar lanza IllegalStateException")
+    public void shouldThrowExceptionIfScoreCalledBeforeGameEnds() {
+        BowlingGame game = new BowlingGame();
+        game.roll(10); // Juego incompleto
+
+        assertThrows(IllegalStateException.class, () -> game.score());
+    }
+
 
 }
