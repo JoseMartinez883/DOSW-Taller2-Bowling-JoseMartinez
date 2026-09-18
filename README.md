@@ -51,6 +51,14 @@ El código fue analizado localmente asegurando el cumplimiento del Quality Gate 
 
 
 ---
+## Pull Requests
+Los cambios llegaron a develop solo por Pull Request. No hay commits directos sobre develop.
+
+| Enlace al PR                            | Fecha de Merge | Módulo que cubre                                                              |
+|:----------------------------------------|:---------------|:------------------------------------------------------------------------------|
+| [PR #1: Implementación Motor Bowling](https://github.com/JoseMartinez883/DOSW-Taller2-Bowling-JoseMartinez/pull/1) | *17/09/2026*   | Módulos A, B y C (Lógica completa, Puntuación y Refactor), Jacoco y SonarQube |
+
+---
 
 ##  Preguntas de Reflexión Técnicas
 
@@ -64,4 +72,4 @@ El código fue analizado localmente asegurando el cumplimiento del Quality Gate 
    JaCoCo fue clave para visualizar la cobertura de ramas (Branches). Al principio nos enfocamos en el "Happy Path", pero el reporte nos mostró en rojo las ramas de validación (Exceptions). Esto nos llevó a formalizar casos como el A4 (Intentar derribar más de 10 pines combinados en un mismo frame) o el A5 (Intentar lanzar después de haber terminado el juego). JaCoCo garantizó que todos esos `if` de seguridad fueran ejecutados.
 
 4. **¿Qué hallazgo de SonarQube produjo un cambio real en el código?**
-   SonarQube detectó *Code Smells* relacionados con la legibilidad y la duplicación de literales numéricos. Aunque el código funcionaba, el análisis estático advirtió sobre el uso repetitivo del número `10` en el código fuente. Esto fue el detonante definitivo para realizar el refactor hacia las constantes `MAX_FRAMES` y `MAX_PINS`. Adicionalmente, el análisis nos obligó a limpiar `imports` sin uso (como el de `IntStream` en `BowlingGame`) que habían quedado "huérfanos" tras nuestro refactor hacia el Scorer.
+   SonarQube detectó *Code Smells* relacionados con la legibilidad y la duplicación de numeros. Aunque el código funcionaba, el análisis estático advirtió sobre el uso repetitivo del número `10` en el código fuente. Esto fue la causa para realizar el refactor hacia las constantes `MAX_FRAMES` y `MAX_PINS`. Adicionalmente, el análisis nos obligó a limpiar `imports` sin uso (como el de `IntStream` en `BowlingGame`) que habían quedado innecesario tras nuestro refactor hacia el Scorer.
