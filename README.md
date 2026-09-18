@@ -54,9 +54,11 @@ El código fue analizado localmente asegurando el cumplimiento del Quality Gate 
 ## Pull Requests
 Los cambios llegaron a develop solo por Pull Request. No hay commits directos sobre develop.
 
-| Enlace al PR                            | Fecha de Merge | Módulo que cubre                                                              |
-|:----------------------------------------|:---------------|:------------------------------------------------------------------------------|
-| [PR #1: Implementación Motor Bowling](https://github.com/JoseMartinez883/DOSW-Taller2-Bowling-JoseMartinez/pull/1) | *17/09/2026*   | Módulos A, B y C (Lógica completa, Puntuación y Refactor), Jacoco y SonarQube |
+| Enlace al PR                                                                                                                       | Fecha de Merge | Módulo que cubre                                                                |
+|:-----------------------------------------------------------------------------------------------------------------------------------|:---------------|:--------------------------------------------------------------------------------|
+| [PR #1: Implementación Motor Bowling](https://github.com/JoseMartinez883/DOSW-Taller2-Bowling-JoseMartinez/pull/1)                 | *17/09/2026*   | Módulos A, B y C (Lógica completa, Puntuación y Refactor), Jacoco y SonarQube   |
+| [PR #2: Eliminando la carpeta .idea/ del repositorio](https://github.com/JoseMartinez883/DOSW-Taller2-Bowling-JoseMartinez/pull/2) | *17/09/2026*   | Eliminando la carpeta .idea/ del repositorio                                    |
+| [PR #3: Actualizando evidencia README](https://github.com/JoseMartinez883/DOSW-Taller2-Bowling-JoseMartinez/pull/3)                | *17/09/2026*   | Coreccion seccion de preguntas tecnicas y actualizando la tabla de pull request |
 
 ---
 
